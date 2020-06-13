@@ -1,0 +1,27 @@
+{
+  "name": "nodeboilerplate",
+  "version": "0.1.0",
+  "description": "Boilerplate node made by Rooftop Dev Labs",
+  "main": "server.ts",
+  "author": "Rooftop Dev Labs",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.23.0",
+    "inversify": "^5.0.1",
+    "ioredis": "^4.17.3",
+    "joi": "^14.3.1",
+    "morgan": "^1.10.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.25"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.6",
+    "@types/ioredis": "^4.16.5",
+    "@types/joi": "^14.3.4",
+    "@types/node": "^14.0.13",
+    "jest": "^26.0.1"
+  }
+}
