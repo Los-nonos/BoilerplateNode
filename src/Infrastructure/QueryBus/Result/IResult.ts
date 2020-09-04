@@ -1,4 +1,3 @@
-export interface IResult {
-    setData(data: any): void;
+export default interface IResult {
     getData(): any;
 }
