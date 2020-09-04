@@ -1,5 +1,5 @@
 import { injectable, inject } from 'inversify';
-import {{action}}{{grouping}}Command from "../../../../Application/Commands/Command/{{grouping}}/{{action}}{{grouping}}Command";
+import {{action}}{{grouping}}Query from "../../../../Application/Queries/Query/{{grouping}}/{{action}}{{grouping}}Query";
 import IValidator from "../../Validations/Utils/IValidationService";
 import { INTERFACES } from "../../../../Infrastructure/DI/interfaces.types";
 import ValidationException from "../../../../Application/Exceptions/ValidationException";
@@ -19,7 +19,7 @@ class {{action}}{{grouping}}Adapter
      * @return {{action}}{{grouping}}Query
      * @throws InvalidBodyException
      */
-    public function adapt(body: any): {{action}}{{grouping}}Query
+    public adapt(body: any): {{action}}{{grouping}}Query
     {
         const error = this.validatorService.validate(body, {});
 
@@ -30,3 +30,5 @@ class {{action}}{{grouping}}Adapter
         return new {{action}}{{grouping}}Query();
     }
 }
+
+export default {{action}}{{grouping}}Adapter;

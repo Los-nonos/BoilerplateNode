@@ -4,12 +4,12 @@ class {{action}}{{grouping}}Result implements ResultInterface
 {
     private value: any;
     public constructor(
-        value?: any
+        value: any
     ) {
         this.value = value;
     }
 
-    public getValue(): any {
+    public getData(): any {
         return this.value;
     }
 }

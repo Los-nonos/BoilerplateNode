@@ -10,7 +10,7 @@ class {{action}}{{grouping}}Action
     private handler: {{action}}{{grouping}}Handler;
 
     public constructor(
-        @inject({{action}}{{grouping}}Adapter) adapter: {{action}}{{grouping}}Adapter
+        @inject({{action}}{{grouping}}Adapter) adapter: {{action}}{{grouping}}Adapter,
         @inject({{action}}{{grouping}}Handler) handler: {{action}}{{grouping}}Handler
     ) {
         this.handler = handler;
@@ -26,3 +26,5 @@ class {{action}}{{grouping}}Action
         return res.json(200).json({message: 'ok'});
     }
 }
+
+export default {{action}}{{grouping}}Action;
