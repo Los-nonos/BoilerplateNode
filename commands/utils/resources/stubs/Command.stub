@@ -1,9 +1,9 @@
-import CommandInterface from '../../../Infrastructure/CommandBus/Command/ICommand';
+import CommandInterface from '../../../../Infrastructure/CommandBus/Command/ICommand';
 
 class {{action}}{{grouping}}Command implements CommandInterface
 {
 {{class_attributes}}
-    public function __construct(
+    public constructor(
 {{constructor_parameters}}
     ) {
 {{constructor_assignments}}

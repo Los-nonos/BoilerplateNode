@@ -9,10 +9,10 @@ final class {{action}}{{grouping}}Handler implements HandlerInterface
     /**
      * Execute the given query and return a result
      *
-     * @param {{action}}{{grouping}}Query $query
+     * @param  $query
      * @return {{action}}{{grouping}}Result
      */
-    public function handle($query): {{action}}{{grouping}}Result
+    public function handle(query: {{action}}{{grouping}}Query): Promise<{{action}}{{grouping}}Result>
     {
         return new {{action}}{{grouping}}Result();
     }

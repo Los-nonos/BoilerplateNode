@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 import {{action}}{{grouping}}Adapter from '../../Adapters/{{grouping}}/{{action}}{{grouping}}Adapter';
-import {{action}}{{grouping}}Handler from '../../../Application/Commands/Command/Handler/{{grouping}}/{{action}}{{grouping}}Handler';
+import {{action}}{{grouping}}Handler from '../../../../Application/Commands/Command/Handler/{{grouping}}/{{action}}{{grouping}}Handler';
 import { injectable, inject } from 'inversify';
 
 @injectable()
 class {{action}}{{grouping}}Action
 {
     private adapter: {{action}}{{grouping}}Adapter;
-    private handler: {{action}}{{grouping}Handler;
+    private handler: {{action}}{{grouping}}Handler;
 
     public constructor(
         @inject({{action}}{{grouping}}Adapter) adapter: {{action}}{{grouping}}Adapter
@@ -17,11 +17,11 @@ class {{action}}{{grouping}}Action
         this.adapter = adapter;
     }
 
-    public function execute(req: Request, res: Response)
+    public async execute(req: Request, res: Response)
     {
-        const command = this.adapter.adapt(res.body);
+        const command = this.adapter.adapt(req.body);
 
-        this.handler.execute(command);
+        await this.handler.execute(command);
 
         return res.json(200).json({message: 'ok'});
     }

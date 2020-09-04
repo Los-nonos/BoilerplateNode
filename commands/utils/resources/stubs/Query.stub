@@ -1,4 +1,4 @@
-import QueryInterface from '../../../Infrastructure/QueryBus/Query/IQuery';
+import QueryInterface from '../../../../Infrastructure/QueryBus/Query/IQuery';
 
 class {{action}}{{grouping}}Query implements QueryInterface
 {

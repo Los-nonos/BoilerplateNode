@@ -8,10 +8,9 @@ class {{action}}{{grouping}}Handler implements HandlerInterface
     /**
      * Execute the given command
      *
-     * @param {{action}}{{grouping}}Command $command
      * @return void
      */
-    public function execute(command): void
+    public function execute(command: {{action}}{{grouping}}Command): Promise<void>
     {
 
     }

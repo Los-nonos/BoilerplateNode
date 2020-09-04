@@ -1,5 +1,8 @@
 import { injectable, inject } from 'inversify';
-
+import {{action}}{{grouping}}Command from "../../../../Application/Commands/Command/{{grouping}}/{{action}}{{grouping}}Command";
+import IValidator from "../../Validations/Utils/IValidationService";
+import { INTERFACES } from "../../../../Infrastructure/DI/interfaces.types";
+import ValidationException from "../../../../Application/Exceptions/ValidationException";
 
 @injectable()
 class {{action}}{{grouping}}Adapter
@@ -21,7 +24,7 @@ class {{action}}{{grouping}}Adapter
         const error = this.validatorService.validate(body, {});
 
         if (error){
-            throw new ValidationException(JSON.stringify(this.validatorService.validateResult(error.details)));
+            throw new ValidationException(JSON.stringify(this.validatorService.validationResult(error.details)));
         }
 
         return new {{action}}{{grouping}}Command();
