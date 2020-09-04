@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import {{action}}{{grouping}}Adapter from '../../Adapters/{{grouping}}/{{action}}{{grouping}}Adapter';
-import {{action}}{{grouping}}Handler from '../../../../Application/Queries/Query/Handler/{{grouping}}/{{action}}{{grouping}}Handler';
+import {{action}}{{grouping}}Handler from '../../../../Application/Queries/Handler/{{grouping}}/{{action}}{{grouping}}Handler';
 import { injectable, inject } from 'inversify';
 
 @injectable()

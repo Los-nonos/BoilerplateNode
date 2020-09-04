@@ -10,7 +10,7 @@ class {{action}}{{grouping}}Handler implements HandlerInterface
      *
      * @return void
      */
-    public function execute(command: {{action}}{{grouping}}Command): Promise<void>
+    public async execute(command: {{action}}{{grouping}}Command): Promise<void>
     {
 
     }
