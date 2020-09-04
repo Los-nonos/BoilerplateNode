@@ -1,12 +1,9 @@
-<?php
-declare(strict_types=1);
+import HandlerInterface from '../../../../Infrastructure/CommandBus/Handler/IHandler';
+import {{action}}{{grouping}}Command from '../../../Commands/Command/{{grouping}}/{{action}}{{grouping}}Command';
+import { injectable, inject } from 'inversify';
 
-namespace Application\Commands\Handler\{{grouping}};
-
-use Application\Commands\Command\{{grouping}}\{{action}}{{grouping}}Command;
-use Infrastructure\CommandBus\Handler\HandlerInterface;
-
-final class {{action}}{{grouping}}Handler implements HandlerInterface
+@injectable()
+class {{action}}{{grouping}}Handler implements HandlerInterface
 {
     /**
      * Execute the given command
@@ -14,8 +11,10 @@ final class {{action}}{{grouping}}Handler implements HandlerInterface
      * @param {{action}}{{grouping}}Command $command
      * @return void
      */
-    public function handle($command): void
+    public function execute(command): void
     {
 
     }
 }
+
+export default {{action}}{{grouping}}Handler;

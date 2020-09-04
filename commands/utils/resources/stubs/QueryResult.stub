@@ -1,17 +1,17 @@
-<?php
-declare(strict_types=1);
+import ResultInterface from '../../../../Infrastructure/QueryBus/Result/IResult';
 
-namespace Application\Queries\Result\{{grouping}};
-
-use Infrastructure\QueryBus\Result\ResultInterface;
-
-final class {{action}}{{grouping}}Result implements ResultInterface
+class {{action}}{{grouping}}Result implements ResultInterface
 {
-{{class_attributes}}
-    public function __construct(
-{{constructor_parameters}}
+    private value: any;
+    public constructor(
+        value?: any
     ) {
-{{constructor_assignments}}
+        this.value = value;
     }
-{{get_methods}}
+
+    public getValue(): any {
+        return this.value;
+    }
 }
+
+export default {{action}}{{grouping}}Result;

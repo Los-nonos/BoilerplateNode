@@ -1,11 +1,6 @@
-<?php
-declare(strict_types=1);
+import CommandInterface from '../../../Infrastructure/CommandBus/Command/ICommand';
 
-namespace Application\Commands\Command\{{grouping}};
-
-use Infrastructure\CommandBus\Command\CommandInterface;
-
-final class {{action}}{{grouping}}Command implements CommandInterface
+class {{action}}{{grouping}}Command implements CommandInterface
 {
 {{class_attributes}}
     public function __construct(
@@ -15,3 +10,5 @@ final class {{action}}{{grouping}}Command implements CommandInterface
     }
 {{get_methods}}
 }
+
+export default {{action}}{{grouping}}Command;

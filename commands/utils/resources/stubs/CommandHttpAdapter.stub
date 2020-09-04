@@ -1,34 +1,27 @@
-<?php
-declare(strict_types=1);
+import { injectable, inject } from 'inversify';
 
-namespace Presentation\Http\Adapters\{{grouping}};
 
-use App\Exceptions\InvalidBodyException;
-use Application\Commands\Command\{{grouping}}\{{action}}{{grouping}}Command;
-use Presentation\Http\Validator\Utils\ValidatorServiceInterface;
-use Psr\Http\Message\ServerRequestInterface;
-
-final class {{action}}{{grouping}}Adapter
+@injectable()
+class {{action}}{{grouping}}Adapter
 {
-    private ValidatorServiceInterface $validatorService;
+    private validatorService: IValidator;
 
-    public function __construct(ValidatorServiceInterface $validatorService)
+    public constructor(@inject(INTERFACES.IValidator) validatorService: IValidator)
     {
-        $this->validatorService = $validatorService;
+        this.validatorService = validatorService;
     }
 
     /**
      * Adapt a http request to an application's layer input
-     * @param ServerRequestInterface $request
      * @return {{action}}{{grouping}}Command
      * @throws InvalidBodyException
      */
-    public function adapt(ServerRequestInterface $request): {{action}}{{grouping}}Command
+    public function adapt(body: any): {{action}}{{grouping}}Command
     {
-        $this->validatorService->make($request->getParsedBody(), []);
+        const error = this.validatorService.validate(body, {});
 
-        if ($this->validatorService->isFail()){
-            throw new InvalidBodyException($this->validatorService->getErrors());
+        if (error){
+            throw new ValidationException(JSON.stringify(this.validatorService.validateResult(error.details)));
         }
 
         return new {{action}}{{grouping}}Command();

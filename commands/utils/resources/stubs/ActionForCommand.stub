@@ -1,17 +1,17 @@
 import { Request, Response } from 'express';
-import ${action}${grouping}Adapter from '../Adapters/${grouping}\${action}${grouping}Adapter';
-import ${action}${grouping}Handler from '../../../Application/Commands/Command/Handler/${action}${grouping}Handler';
+import {{action}}{{grouping}}Adapter from '../../Adapters/{{grouping}}/{{action}}{{grouping}}Adapter';
+import {{action}}{{grouping}}Handler from '../../../Application/Commands/Command/Handler/{{grouping}}/{{action}}{{grouping}}Handler';
 import { injectable, inject } from 'inversify';
 
 @injectable()
 class {{action}}{{grouping}}Action
 {
     private adapter: {{action}}{{grouping}}Adapter;
-    private handler: ${action}${grouping}Handler;
+    private handler: {{action}}{{grouping}Handler;
 
     public constructor(
-        @inject(${action}${grouping}Adapter) adapter: ${action}${grouping}Adapter
-        @inject(${action}${grouping}Handler) handler: ${action}${grouping}handler
+        @inject({{action}}{{grouping}}Adapter) adapter: {{action}}{{grouping}}Adapter
+        @inject({{action}}{{grouping}}Handler) handler: {{action}}{{grouping}}Handler
     ) {
         this.handler = handler;
         this.adapter = adapter;
@@ -19,7 +19,7 @@ class {{action}}{{grouping}}Action
 
     public function execute(req: Request, res: Response)
     {
-        const command = $this->adapter->adapt($request);
+        const command = this.adapter.adapt(res.body);
 
         this.handler.execute(command);
 

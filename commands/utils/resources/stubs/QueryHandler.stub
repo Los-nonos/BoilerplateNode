@@ -1,12 +1,9 @@
-<?php
-declare(strict_types=1);
+import HandlerInterface from '../../../../Infrastructure/CommandBus/Handler/IHandler';
+import {{action}}{{grouping}}Query from '../../../Queries/Query/{{grouping}}/{{action}}{{grouping}}Query';
+import {{action}}{{grouping}}Result from '../../../Queries/Results/{{grouping}}/{{action}}{{grouping}}Result';
+import { injectable, inject } from 'inversify';
 
-namespace Application\Queries\Handler\{{grouping}};
-
-use Application\Queries\Query\{{grouping}}\{{action}}{{grouping}}Query;
-use Application\Queries\Result\{{grouping}}\{{action}}{{grouping}}Result;
-use Infrastructure\QueryBus\Handler\HandlerInterface;
-
+@injectable()
 final class {{action}}{{grouping}}Handler implements HandlerInterface
 {
     /**
@@ -20,3 +17,5 @@ final class {{action}}{{grouping}}Handler implements HandlerInterface
         return new {{action}}{{grouping}}Result();
     }
 }
+
+export default {{action}}{{grouping}}Handler;

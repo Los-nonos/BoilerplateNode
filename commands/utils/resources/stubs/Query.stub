@@ -1,11 +1,6 @@
-<?php
-declare(strict_types=1);
+import QueryInterface from '../../../Infrastructure/QueryBus/Query/IQuery';
 
-namespace Application\Queries\Query\{{grouping}};
-
-use Infrastructure\QueryBus\Query\QueryInterface;
-
-final class {{action}}{{grouping}}Query implements QueryInterface
+class {{action}}{{grouping}}Query implements QueryInterface
 {
 {{class_attributes}}
     public function __construct(
@@ -15,3 +10,5 @@ final class {{action}}{{grouping}}Query implements QueryInterface
     }
 {{get_methods}}
 }
+
+export default {{action}}{{grouping}}Query;
