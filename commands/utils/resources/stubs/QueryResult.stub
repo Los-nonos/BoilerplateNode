@@ -1,0 +1,17 @@
+<?php
+declare(strict_types=1);
+
+namespace Application\Queries\Result\{{grouping}};
+
+use Infrastructure\QueryBus\Result\ResultInterface;
+
+final class {{action}}{{grouping}}Result implements ResultInterface
+{
+{{class_attributes}}
+    public function __construct(
+{{constructor_parameters}}
+    ) {
+{{constructor_assignments}}
+    }
+{{get_methods}}
+}

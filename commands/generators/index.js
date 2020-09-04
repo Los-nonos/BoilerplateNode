@@ -8,8 +8,8 @@ const rl = readline.createInterface({
 
 rl.question("What is a usecase name? ", function(useCaseName) {
     rl.question("Do you need a query (q) o a command (c)? Put 'q' or 'c': ", function(useCaseType) {
-        rl.question('What attributes do you need? Format: name-type (Ex.: name-Object,userId-int,age-?string)', function (attributes) {
-            rl.question('If you have a specific grouping, write it down (Ex.: /Grouping/Example)', function(grouping) {
+        rl.question('What attributes do you need? Format: name-type (Ex.: name-Object,userId-int,age-?string) ', function (attributes) {
+            rl.question('If you have a specific grouping, write it down (Ex.: /Grouping/Example) ', function(grouping) {
                 const isCommand = useCaseType === 'c';
 
                 const actionFilePath = generator.buildActionFilePath(useCaseName, grouping);
@@ -54,9 +54,9 @@ rl.question("What is a usecase name? ", function(useCaseName) {
                 }
 
                 console.info('4. Files was created!\n');
+                rl.close();
             })
         })
-        rl.close();
     });
 });
 

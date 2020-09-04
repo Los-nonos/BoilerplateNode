@@ -1,0 +1,35 @@
+<?php
+declare(strict_types=1);
+
+namespace Presentation\Http\Actions\{{grouping}};
+
+use Infrastructure\QueryBus\QueryBusInterface;
+use Presentation\Http\Adapters\{{grouping}}\{{action}}{{grouping}}Adapter;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+
+final class {{action}}{{grouping}}Action
+{
+    private QueryBusInterface $queryBus;
+    private {{action}}{{grouping}}Adapter $adapter;
+
+    public function __construct(
+        QueryBusInterface $queryBus,
+        {{action}}{{grouping}}Adapter $adapter
+    ) {
+        $this->queryBus = $queryBus;
+        $this->adapter = $adapter;
+    }
+
+    /**
+     * Execute the concrete action
+     */
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
+    {
+        $query = $this->adapter->adapt($request);
+
+        $result = $this->queryBus->handle($query);
+
+        // TODO: Code your response logic. You can use presenters or transformers.
+    }
+}

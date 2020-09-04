@@ -1,0 +1,17 @@
+<?php
+declare(strict_types=1);
+
+namespace Application\Queries\Query\{{grouping}};
+
+use Infrastructure\QueryBus\Query\QueryInterface;
+
+final class {{action}}{{grouping}}Query implements QueryInterface
+{
+{{class_attributes}}
+    public function __construct(
+{{constructor_parameters}}
+    ) {
+{{constructor_assignments}}
+    }
+{{get_methods}}
+}

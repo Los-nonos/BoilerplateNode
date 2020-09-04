@@ -1,0 +1,36 @@
+<?php
+declare(strict_types=1);
+
+namespace Presentation\Http\Adapters\{{grouping}};
+
+use App\Exceptions\InvalidBodyException;
+use Application\Commands\Command\{{grouping}}\{{action}}{{grouping}}Command;
+use Presentation\Http\Validator\Utils\ValidatorServiceInterface;
+use Psr\Http\Message\ServerRequestInterface;
+
+final class {{action}}{{grouping}}Adapter
+{
+    private ValidatorServiceInterface $validatorService;
+
+    public function __construct(ValidatorServiceInterface $validatorService)
+    {
+        $this->validatorService = $validatorService;
+    }
+
+    /**
+     * Adapt a http request to an application's layer input
+     * @param ServerRequestInterface $request
+     * @return {{action}}{{grouping}}Command
+     * @throws InvalidBodyException
+     */
+    public function adapt(ServerRequestInterface $request): {{action}}{{grouping}}Command
+    {
+        $this->validatorService->make($request->getParsedBody(), []);
+
+        if ($this->validatorService->isFail()){
+            throw new InvalidBodyException($this->validatorService->getErrors());
+        }
+
+        return new {{action}}{{grouping}}Command();
+    }
+}

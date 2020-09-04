@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
     getCurrentDirectoryBase: () => {
-        return path.basename(process.cwd());
+        return path.join(__dirname, '../../');
     },
 
     directoryExists: (filePath) => {
@@ -11,15 +11,21 @@ module.exports = {
     },
 
     resource_path: (filePath) => {
-        return `${this.getCurrentDirectoryBase()}/resources/${filePath}`;
+        return path.join(__dirname, '/resources', filePath);
     },
 
     readFile: (filePath) => {
-        return fs.readFileSync(filePath).toString();
+        filePath = path.join(filePath);
+        if (!fs.existsSync(filePath)) {
+            throw new Error(`${filePath} not exist`);
+        }
+
+        return fs.readFileSync(filePath).toString('utf-8');
     },
 
     writeFile: (filePath, content) => {
-        fs.writeFileSync(filePath, content);
+        fs.appendFileSync(filePath, content);
+        //fs.writeFileSync(filePath, content);
     },
 
     isDirectory: (path) => {
@@ -27,8 +33,7 @@ module.exports = {
     },
     makeDirectory(filePath) {
         fs.mkdirSync(filePath, {
-            recursive: false,
-            mode: 755
+            recursive: true,
         });
     }
 };

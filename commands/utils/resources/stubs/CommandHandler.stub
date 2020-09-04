@@ -1,0 +1,21 @@
+<?php
+declare(strict_types=1);
+
+namespace Application\Commands\Handler\{{grouping}};
+
+use Application\Commands\Command\{{grouping}}\{{action}}{{grouping}}Command;
+use Infrastructure\CommandBus\Handler\HandlerInterface;
+
+final class {{action}}{{grouping}}Handler implements HandlerInterface
+{
+    /**
+     * Execute the given command
+     *
+     * @param {{action}}{{grouping}}Command $command
+     * @return void
+     */
+    public function handle($command): void
+    {
+
+    }
+}

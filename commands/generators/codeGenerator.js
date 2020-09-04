@@ -4,7 +4,7 @@ const file = require('../utils/file');
 
 
 const buildActionFilePath = (action, grouping, isCommand) => {
-    const path = `${file.getCurrentDirectoryBase()}/Presentation/Http/Actions/${grouping}/${action}${grouping}Action.ts`;
+    const path = `${file.getCurrentDirectoryBase()}src/Presentation/Http/Actions/${grouping}/${action}${grouping}Action.ts`;
 
     if (file.directoryExists(path)) {
         throw new FileExistException(path);
@@ -14,7 +14,7 @@ const buildActionFilePath = (action, grouping, isCommand) => {
 }
 
 const buildAdapterFilePath = (action, grouping) => {
-    const path = `${file.getCurrentDirectoryBase()}/Presentation/Http/Adapters/${grouping}/${action}${grouping}Adapter.ts`;
+    const path = `${file.getCurrentDirectoryBase()}src/Presentation/Http/Adapters/${grouping}/${action}${grouping}Adapter.ts`;
 
     if (file.directoryExists(path)) {
         throw new FileExistException(path);
@@ -26,9 +26,9 @@ const buildAdapterFilePath = (action, grouping) => {
 const buildInputFilePath = (action, grouping, isCommand) => {
     let path = '';
     if (isCommand) {
-        path = `${file.getCurrentDirectoryBase()}/Application/Commands/Command/${grouping}/${action}${grouping}Command.ts`;
+        path = `${file.getCurrentDirectoryBase()}src/Application/Commands/Command/${grouping}/${action}${grouping}Command.ts`;
     }else {
-        path = `${file.getCurrentDirectoryBase()}/Application/Queries/Query/${grouping}/${action}${grouping}Query.ts`;
+        path = `${file.getCurrentDirectoryBase()}src/Application/Queries/Query/${grouping}/${action}${grouping}Query.ts`;
     }
 
     if (file.directoryExists(path)) {
@@ -41,9 +41,9 @@ const buildInputFilePath = (action, grouping, isCommand) => {
 const buildHandlerFilePath = (action, grouping, isCommand) => {
     let path = '';
     if (isCommand) {
-        path = `${file.getCurrentDirectoryBase()}/Application/Commands/Handler/${grouping}/${action}${grouping}Handler.ts`;
+        path = `${file.getCurrentDirectoryBase()}src/Application/Commands/Handler/${grouping}/${action}${grouping}Handler.ts`;
     }else {
-        path = `${file.getCurrentDirectoryBase()}/Application/Queries/Handler/${grouping}/${action}${grouping}Handler.ts`;
+        path = `${file.getCurrentDirectoryBase()}src/Application/Queries/Handler/${grouping}/${action}${grouping}Handler.ts`;
     }
 
     if (file.directoryExists(path)) {
@@ -54,7 +54,7 @@ const buildHandlerFilePath = (action, grouping, isCommand) => {
 }
 
 const buildResultFilePath = (action, grouping) => {
-    const path = `${file.getCurrentDirectoryBase()}/Application/Queries/Results/${grouping}/${action}${grouping}Result.ts`;
+    const path = `${file.getCurrentDirectoryBase()}/src/Application/Queries/Results/${grouping}/${action}${grouping}Result.ts`;
 
     if (file.directoryExists(path)) {
         throw new FileExistException(path);
@@ -68,8 +68,8 @@ const buildActionClass = (action, grouping, isCommand) => {
 
     let stubContent = file.readFile(stub);
 
-    stubContent = stubContent.replaceAll('${action}', action);
-    stubContent = stubContent.replaceAll('${grouping}', grouping);
+    stubContent = stubContent.replace(/{{action}}/gi, action);
+    stubContent = stubContent.replace(/{{grouping}}/gi, grouping);
 
     return stubContent;
 }
@@ -79,8 +79,8 @@ const buildAdapterClass = (action, grouping, isCommand) => {
 
     let stubContent = file.readFile(stub);
 
-    stubContent = stubContent.replaceAll('${action}', action);
-    stubContent = stubContent.replaceAll('${grouping}', grouping);
+    stubContent = stubContent.replace(/{{action}}/gi, action);
+    stubContent = stubContent.replace(/{{grouping}}/gi, grouping);
 
     return stubContent;
 }
@@ -100,29 +100,29 @@ const buildInputClass = (action, grouping, attributes, isCommand) => {
         let name = attribute.split('-')[0];
         let type = attribute.split('-')[1];
 
-        classAttributes += `    private ${name}` + isNullable(type) ? '?:' : ':' + `${name}; \n`;
+        classAttributes += `    private ${name} ${isNullable(type) ? '?:' : ':'} ${isNullable(type) ? type.slice(1) : type}; \n`;
 
-        constructorParameters += `        ${name}${isNullable(type) ? '?:' : ':'} ${type} ${isNullable(type) ? '= null' : ''} ${isLastElement(attribute, attributes) ? '' : ",\n"}`
-        constructorAssignment += `        this.${name} = ${name} ${isLastElement(attribute, attributes) ? ';' : ':\n'}`
+        constructorParameters += `        ${name}${isNullable(type) ? '?:' : ':'} ${isNullable(type) ? type.slice(1) : type} ${isLastElement(attribute, attributes) ? '' : ",\n"}`
+        constructorAssignment += `        this.${name} = ${name}${isLastElement(attribute, attributes) ? ';' : ';\n'}`
 
         getMethods += isFirstElement(attribute, attributes) ? '\n' : "\n\n";
-        getMethods += `    public get${attribute.charAt(0).toUpperCase() + attribute.slice(1)}(): ${type} \n`
+        getMethods += `    public get${name.charAt(0).toUpperCase() + name.slice(1)}(): ${isNullable(type) ? type.slice(1) : type} \n`
         getMethods += `    {\n`;
         getMethods += `        return this.${name};\n`;
         getMethods += `    }`
     }
 
 
-    const stub = isCommand ? file.resource_path('/stubs/ActionForCommand.stub') : file.resource_path('/stubs/ActionForQuery.stub');
+    const stub = isCommand ? file.resource_path('/stubs/Command.stub') : file.resource_path('/stubs/Query.stub');
 
     let stubContent = file.readFile(stub);
 
-    stubContent = stubContent.replaceAll('${action}', action);
-    stubContent = stubContent.replaceAll('${grouping}', grouping);
-    stubContent = stubContent.replaceAll('${class_attributes}', classAttributes);
-    stubContent = stubContent.replaceAll('${constructor_parameters}', constructorParameters);
-    stubContent = stubContent.replaceAll('${constructor_assignments}', constructorAssignment);
-    stubContent = stubContent.replaceAll('${get_methods}', getMethods);
+    stubContent = stubContent.replace(/{{grouping}}/gi, grouping);
+    stubContent = stubContent.replace(/{{action}}/gi, action);
+    stubContent = stubContent.replace(/{{class_attributes}}/gi, classAttributes);
+    stubContent = stubContent.replace(/{{constructor_parameters}}/gi, constructorParameters);
+    stubContent = stubContent.replace(/{{constructor_assignments}}/gi, constructorAssignment);
+    stubContent = stubContent.replace(/{{get_methods}}/gi, getMethods);
 
     return stubContent;
 }
@@ -132,8 +132,8 @@ const buildHandlerClass = (action, grouping, isCommand) => {
 
     let stubContent = file.readFile(stub);
 
-    stubContent = stubContent.replaceAll('${action}', action);
-    stubContent = stubContent.replaceAll('${grouping}', grouping);
+    stubContent = stubContent.replace(/{{action}}/gi, action);
+    stubContent = stubContent.replace(/{{grouping}}/gi, grouping);
 
     return stubContent;
 }
@@ -143,8 +143,8 @@ const buildResultClass = (action, grouping) => {
 
     let stubContent = file.readFile(stub);
 
-    stubContent = stubContent.replaceAll('${action}', action);
-    stubContent = stubContent.replaceAll('${grouping}', grouping);
+    stubContent = stubContent.replace(/{{action}}/gi, action);
+    stubContent = stubContent.replace(/{{grouping}}/gi, grouping);
 
     return stubContent;
 }
@@ -162,6 +162,7 @@ const isFirstElement = (index, attributes) => {
 }
 
 const makeDirectory = filePath => {
+    filePath = filePath.slice(0, filePath.lastIndexOf('/'))
     if (!file.isDirectory(filePath)) {
         file.makeDirectory(filePath);
     }

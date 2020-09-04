@@ -1,0 +1,17 @@
+<?php
+declare(strict_types=1);
+
+namespace Application\Commands\Command\{{grouping}};
+
+use Infrastructure\CommandBus\Command\CommandInterface;
+
+final class {{action}}{{grouping}}Command implements CommandInterface
+{
+{{class_attributes}}
+    public function __construct(
+{{constructor_parameters}}
+    ) {
+{{constructor_assignments}}
+    }
+{{get_methods}}
+}
