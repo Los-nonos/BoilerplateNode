@@ -1,5 +1,4 @@
-import FileExistException from "../Exceptions/FileExistException";
-import {readFile, resource_path} from "../utils/file";
+const FileExistException = require("../Exceptions/FileExistException");
 
 const file = require('../utils/file');
 
@@ -65,9 +64,9 @@ const buildResultFilePath = (action, grouping) => {
 }
 
 const buildActionClass = (action, grouping, isCommand) => {
-    const stub = isCommand ? resource_path('/stubs/ActionForCommand.stub') : resource_path('/stubs/ActionForQuery.stub');
+    const stub = isCommand ? file.resource_path('/stubs/ActionForCommand.stub') : file.resource_path('/stubs/ActionForQuery.stub');
 
-    let stubContent = readFile(stub);
+    let stubContent = file.readFile(stub);
 
     stubContent = stubContent.replaceAll('${action}', action);
     stubContent = stubContent.replaceAll('${grouping}', grouping);
@@ -76,9 +75,9 @@ const buildActionClass = (action, grouping, isCommand) => {
 }
 
 const buildAdapterClass = (action, grouping, isCommand) => {
-    const stub = isCommand ? resource_path('/stubs/CommandHttpAdapter.stub') : resource_path('/stubs/QueryHttpAdapter.stub');
+    const stub = isCommand ? file.resource_path('/stubs/CommandHttpAdapter.stub') : file.resource_path('/stubs/QueryHttpAdapter.stub');
 
-    let stubContent = readFile(stub);
+    let stubContent = file.readFile(stub);
 
     stubContent = stubContent.replaceAll('${action}', action);
     stubContent = stubContent.replaceAll('${grouping}', grouping);
@@ -114,9 +113,9 @@ const buildInputClass = (action, grouping, attributes, isCommand) => {
     }
 
 
-    const stub = isCommand ? resource_path('/stubs/ActionForCommand.stub') : resource_path('/stubs/ActionForQuery.stub');
+    const stub = isCommand ? file.resource_path('/stubs/ActionForCommand.stub') : file.resource_path('/stubs/ActionForQuery.stub');
 
-    let stubContent = readFile(stub);
+    let stubContent = file.readFile(stub);
 
     stubContent = stubContent.replaceAll('${action}', action);
     stubContent = stubContent.replaceAll('${grouping}', grouping);
@@ -129,9 +128,9 @@ const buildInputClass = (action, grouping, attributes, isCommand) => {
 }
 
 const buildHandlerClass = (action, grouping, isCommand) => {
-    const stub = isCommand ? resource_path('/stubs/CommandHandler.stub') : resource_path('/stubs/QueryHandler.stub');
+    const stub = isCommand ? file.resource_path('/stubs/CommandHandler.stub') : file.resource_path('/stubs/QueryHandler.stub');
 
-    let stubContent = readFile(stub);
+    let stubContent = file.readFile(stub);
 
     stubContent = stubContent.replaceAll('${action}', action);
     stubContent = stubContent.replaceAll('${grouping}', grouping);
@@ -140,9 +139,9 @@ const buildHandlerClass = (action, grouping, isCommand) => {
 }
 
 const buildResultClass = (action, grouping) => {
-    const stub = resource_path('/stubs/QueryResult.stub');
+    const stub = file.resource_path('/stubs/QueryResult.stub');
 
-    let stubContent = readFile(stub);
+    let stubContent = file.readFile(stub);
 
     stubContent = stubContent.replaceAll('${action}', action);
     stubContent = stubContent.replaceAll('${grouping}', grouping);
@@ -163,14 +162,16 @@ const isFirstElement = (index, attributes) => {
 }
 
 const makeDirectory = filePath => {
-
+    if (!file.isDirectory(filePath)) {
+        file.makeDirectory(filePath);
+    }
 }
 
 const fileSystemPut = (filePath, fileClass) => {
-
+    file.writeFile(filePath, fileClass);
 }
 
-export {
+module.exports = {
     buildActionFilePath,
     buildAdapterFilePath,
     buildInputFilePath,

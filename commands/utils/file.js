@@ -20,5 +20,15 @@ module.exports = {
 
     writeFile: (filePath, content) => {
         fs.writeFileSync(filePath, content);
+    },
+
+    isDirectory: (path) => {
+        return fs.existsSync(path)
+    },
+    makeDirectory(filePath) {
+        fs.mkdirSync(filePath, {
+            recursive: false,
+            mode: 755
+        });
     }
 };
