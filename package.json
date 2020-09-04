@@ -18,6 +18,9 @@
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.25"
   },
+  "scripts": {
+    "make:usecase": "node /commands/generators"
+  },
   "devDependencies": {
     "@types/express": "^4.17.6",
     "@types/ioredis": "^4.16.5",
