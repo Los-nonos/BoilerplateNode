@@ -5,6 +5,11 @@ class User {
     
     private surname: string;
 
+    private email: string;
+
+    private password: string;
+
+    private emailHashVerified: boolean;
 
     public getId(): number {
         return this.id;
@@ -20,6 +25,18 @@ class User {
 
     public getRole(): string {
         return '';
+    }
+
+    public getEmail(): string {
+        return this.email;
+    }
+
+    hashEmailVerified() {
+        return this.emailHashVerified === true;
+    }
+
+    getPassword() {
+        return this.password;
     }
 }
 

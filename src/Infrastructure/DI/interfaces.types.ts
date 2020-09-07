@@ -4,5 +4,6 @@ export const INTERFACES = {
     IValidator: Symbol.for('IValidator'),
     ITokenAuthService: Symbol.for('ITokenAuthService'),
     IUserService: Symbol.for('IUserService'),
-    ITokenAuthRepository: Symbol.for('ITokenAuthRepository')
+    ITokenAuthRepository: Symbol.for('ITokenAuthRepository'),
+    IHashManager: Symbol.for('IHashManager')
 }
