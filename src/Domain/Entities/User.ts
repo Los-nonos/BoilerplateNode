@@ -17,6 +17,10 @@ class User {
     public getSurname(): string {
         return this.surname;
     }
+
+    public getRole(): string {
+        return '';
+    }
 }
 
 export default User;
