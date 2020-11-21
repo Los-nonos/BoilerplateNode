@@ -1,4 +1,4 @@
-class LoginCommand {
+class LoginQuery {
     private email: string;
     private password: string;
 
@@ -16,4 +16,4 @@ class LoginCommand {
     }
 }
 
-export default LoginCommand;
+export default LoginQuery;

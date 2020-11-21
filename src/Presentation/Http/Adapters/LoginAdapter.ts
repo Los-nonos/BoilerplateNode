@@ -2,7 +2,7 @@ import {INTERFACES} from "../../../Infrastructure/DI/interfaces.types";
 import IValidator from "../Validations/Utils/IValidationService";
 import {inject} from "inversify";
 import ValidationException from "../../../Application/Exceptions/ValidationException";
-import LoginCommand from "../../../Application/Commands/Command/Auth/LoginCommand";
+import LoginQuery from "../../../Application/Queries/Query/Auth/LoginCommand";
 
 class LoginAdapter {
     private validator: IValidator;
@@ -11,14 +11,14 @@ class LoginAdapter {
         this.validator = validator;
     }
 
-    public from(body: any): LoginCommand {
+    public from(body: any): LoginQuery {
         const error = this.validator.validate(body, {});
 
         if (error) {
             throw new ValidationException(JSON.stringify(this.validator.validationResult(error.details)));
         }
 
-        return new LoginCommand(
+        return new LoginQuery(
             body.email,
             body.password
         )

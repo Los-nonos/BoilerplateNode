@@ -1,15 +1,18 @@
-import {ITokenAuthService} from "../../../Domain/Interfaces/Services/ITokenAuthService";
+import {TokenAuthService} from "../../../Domain/Interfaces/Services/ITokenAuthService";
 import {IToken} from "../../../Domain/ValueObjects/IToken";
 import {INTERFACES} from "../../DI/interfaces.types";
 import {inject, injectable} from "inversify";
-import {ITokenAuthRepository} from "../../../Domain/Interfaces/Repositories/ITokenAuthRepository";
+import {TokenAuthRepository} from "../../../Domain/Interfaces/Repositories/ITokenAuthRepository";
 import UnauthorizedException from "../../../Presentation/Http/Exceptions/UnauthorizedException";
+import User from "../../../Domain/Entities/User";
+import Token from "../Token";
+import crypto from 'crypto';
 
 @injectable()
-class AuthProviderService implements ITokenAuthService{
-    private repository: ITokenAuthRepository;
+class AuthProviderService implements TokenAuthService{
+    private repository: TokenAuthRepository;
 
-    public constructor(@inject(INTERFACES.ITokenAuthRepository) repository: ITokenAuthRepository) {
+    public constructor(@inject(INTERFACES.ITokenAuthRepository) repository: TokenAuthRepository) {
         this.repository = repository;
     }
 
@@ -19,6 +22,16 @@ class AuthProviderService implements ITokenAuthService{
         if (!token){
             throw new UnauthorizedException('Token not valid or expired');
         }
+
+        return token;
+    }
+
+    public async create(user: User): Promise<IToken> {
+        const hash = crypto.createHash('sha1').digest('hex');
+
+        const token = new Token(hash, user);
+
+        await this.repository.persist(token);
 
         return token;
     }

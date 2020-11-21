@@ -2,16 +2,16 @@ import { Request, Response, NextFunction } from 'express';
 import {inject} from "inversify";
 import {INTERFACES} from "../../../Infrastructure/DI/interfaces.types";
 import {IUserService} from "../../../Domain/Interfaces/Services/IUserService";
-import {ITokenAuthService} from "../../../Domain/Interfaces/Services/ITokenAuthService";
+import {TokenAuthService} from "../../../Domain/Interfaces/Services/ITokenAuthService";
 import Forbidden from "../Exceptions/Forbbiden";
 import UnauthorizedException from "../Exceptions/UnauthorizedException";
 
 export default class AuthMiddleware {
     private userService: IUserService;
-    private tokenAuthService: ITokenAuthService;
+    private tokenAuthService: TokenAuthService;
 
     public constructor(
-        @inject(INTERFACES.ITokenAuthService) tokenAuthService: ITokenAuthService,
+        @inject(INTERFACES.ITokenAuthService) tokenAuthService: TokenAuthService,
         @inject(INTERFACES.IUserService) userService: IUserService) {
         this.tokenAuthService = tokenAuthService;
         this.userService = userService;

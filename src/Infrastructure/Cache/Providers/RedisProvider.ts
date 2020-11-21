@@ -1,11 +1,11 @@
-import { ICacheService } from '../../../Domain/Interfaces/Services/ICacheService';
+import { CacheService } from '../../../Domain/Interfaces/Services/CacheService';
 import { inject, injectable } from 'inversify';
 import { Redis } from 'ioredis';
-import { INTERFACES } from '../../../Infrastructure/DI/interfaces.types';
-import { ICacheConnection } from '../../Cache/ICacheConnection';
+import { INTERFACES } from '../../DI/interfaces.types';
+import { ICacheConnection } from '../ICacheConnection';
 
 @injectable()
-export class RedisProvider implements ICacheService {
+export class RedisProvider implements CacheService {
   private connection: Redis;
   public constructor(@inject(INTERFACES.IRedisConnection) redisConnection: ICacheConnection) {
     this.connection = redisConnection.getConnection();

@@ -1,9 +1,9 @@
-import {ITokenAuthRepository} from "../../../../Domain/Interfaces/Repositories/ITokenAuthRepository";
+import {TokenAuthRepository} from "../../../../Domain/Interfaces/Repositories/TokenAuthRepository";
 import TypeRepository from "./TypeRepository";
 import {IToken} from "../../../../Domain/ValueObjects/IToken";
 import Token from "../../../Auth/Token";
 
-class TokenAuthRepository extends TypeRepository implements ITokenAuthRepository {
+class MysqlTokenAuthRepository extends TypeRepository implements TokenAuthRepository {
     public async findOneByHash(hash: string): Promise<IToken> {
         return await this.repository(Token).find({hash});
     }
@@ -18,4 +18,4 @@ class TokenAuthRepository extends TypeRepository implements ITokenAuthRepository
 
 }
 
-export default TokenAuthRepository;
+export default MysqlTokenAuthRepository;

@@ -1,4 +1,4 @@
-export interface ICacheService {
+export interface CacheService {
     deleteKey(key: string): Promise<number>;
     getString(key: string): Promise<string | number | null>;
     incrementCount(key: string): Promise<number>;

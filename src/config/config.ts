@@ -2,8 +2,8 @@ import {env} from "./environment";
 
 const configValues = {
     jwt: {
-        secret: "adagadada",
-        expirationTime: "1h"
+        secret: env('JWT_SECRET'),
+        expirationTime: env('JWT_EXPIRATION_TIME')
     },
     database: {
         credentials: {

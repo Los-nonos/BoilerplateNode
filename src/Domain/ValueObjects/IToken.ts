@@ -1,5 +1,7 @@
+import User from "../Entities/User";
+
 export interface IToken {
-    getUserId(): number;
+    getUser(): User;
     getHash(): string;
-    setHash(hash: string): void;
+    updateHash(hash: string): void;
 }
