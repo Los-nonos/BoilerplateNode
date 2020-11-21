@@ -11,6 +11,9 @@ const configValues = {
             password: env("DATABASE_PASSWORD", "secret"),
         },
         host: env("DATABASE_HOST","mysql"),
+        migration_table: 'migrations',
+        port: env('DATABASE_PORT'),
+        database: env('DATABASE_NAME'),
     },
     redis: {
         port: env('REDIS_PORT', '6938'),

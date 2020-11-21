@@ -1,7 +1,6 @@
 import { createConnection } from 'typeorm';
 import { isTesting, isDevelopment, isProduction, getMode } from '../../config/mode';
 import {config} from '../../config/config';
-import { env } from '../../config/environment';
 
 export default class DatabaseConnection {
   public async getConnection(): Promise<void> {
@@ -10,7 +9,7 @@ export default class DatabaseConnection {
     const db_database = config('database.database');
     const db_port = config('database.port');
     const db_host = config('database.host');
-    const db_migrations_table = config('database.migrationstable');
+    const db_migrations_table = config('database.migration_table');
 
     console.log(`Mode: ${getMode()}`);
     console.log(`Host: ${db_host}`);
