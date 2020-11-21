@@ -1,11 +1,24 @@
 import StoreUserCommand from '../../../../Application/Commands/Command/Users/StoreUserCommand';
-import {injectable} from "inversify";
+import {inject, injectable} from "inversify";
+import {INTERFACES} from "../../../../Infrastructure/DI/interfaces.types";
+import {ValidationService} from "../../Validations/Utils/ValidationService";
+import {storeUserSchema} from "../../Validations/Schemas/UserSchemas";
+import ValidationException from "../../../../Application/Exceptions/ValidationException";
 
 @injectable()
 class StoreUserAdapter {
-  public from(body: any): StoreUserCommand {
-    // validate with validation service and throw exceptions if request have errors
+  private validationService: ValidationService;
+  constructor(@inject(INTERFACES.IValidator) validationService: ValidationService) {
+    this.validationService = validationService;
+  }
 
+  public from(body: any): StoreUserCommand {
+    const error = this.validationService.validate(body, storeUserSchema);
+
+    if (error) {
+      throw new ValidationException(JSON.stringify(this.validationService.validationResult(error.details)));
+    }
+    
     return new StoreUserCommand(body.name, body.surname, body.email, body.password);
   }
 }

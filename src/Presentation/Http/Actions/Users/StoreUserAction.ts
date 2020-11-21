@@ -19,7 +19,7 @@ class StoreUserAction {
 
         await this.handler.execute(command);
 
-        return res.status(HTTP_CODES.CREATED).json(success([], 'StoreUserAction: User has been created successfully'));
+        return res.status(HTTP_CODES.CREATED).json(success(null, 'StoreUserAction: User has been created successfully'));
     }
 }
 
