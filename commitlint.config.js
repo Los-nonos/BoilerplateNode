@@ -13,6 +13,7 @@ module.exports = {
         "implementation",
         "merge",
         "test",
+        "prettier",
       ],
     ],
   },
