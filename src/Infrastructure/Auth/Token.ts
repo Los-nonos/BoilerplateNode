@@ -1,8 +1,8 @@
 import {IToken} from "../../Domain/ValueObjects/IToken";
-import {Column, Entity, OneToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import User from "../../Domain/Entities/User";
 
-@Entity('token_login')
+@Entity('token_logins')
 class Token implements IToken {
 
   @PrimaryGeneratedColumn()
@@ -11,7 +11,8 @@ class Token implements IToken {
   @Column()
   public hash: string;
 
-  @OneToOne(() => User)
+  @OneToOne(_type => User)
+  @JoinColumn()
   public user: User;
 
   public constructor(hash: string, user: User) {

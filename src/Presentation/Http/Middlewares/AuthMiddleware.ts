@@ -1,20 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
-import {inject} from "inversify";
+import {inject, injectable} from "inversify";
 import {INTERFACES} from "../../../Infrastructure/DI/interfaces.types";
-import {IUserService} from "../../../Domain/Interfaces/Services/IUserService";
-import {TokenAuthService} from "../../../Domain/Interfaces/Services/ITokenAuthService";
+import {TokenAuthService} from "../../../Domain/Interfaces/Services/TokenAuthService";
 import Forbidden from "../Exceptions/Forbbiden";
 import UnauthorizedException from "../Exceptions/UnauthorizedException";
 
+@injectable()
 export default class AuthMiddleware {
-    private userService: IUserService;
     private tokenAuthService: TokenAuthService;
 
     public constructor(
-        @inject(INTERFACES.ITokenAuthService) tokenAuthService: TokenAuthService,
-        @inject(INTERFACES.IUserService) userService: IUserService) {
+        @inject(INTERFACES.ITokenAuthService) tokenAuthService: TokenAuthService) {
         this.tokenAuthService = tokenAuthService;
-        this.userService = userService;
     }
 
     public async handle(req: Request, _res: Response, next: NextFunction, roles: string[]) {
@@ -30,7 +27,7 @@ export default class AuthMiddleware {
 
         const token = await this.tokenAuthService.findOneByHashOrFail(authorization);
 
-        const user = await this.userService.findOneByIdOrFail(token.getUserId());
+        const user = token.getUser();
 
         const role = user.getRole();
 

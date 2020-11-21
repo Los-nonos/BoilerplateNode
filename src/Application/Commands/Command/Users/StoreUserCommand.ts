@@ -1,21 +1,38 @@
 import ICommand from '../../../../Infrastructure/CommandBus/Command/ICommand';
 
 class StoreUserCommand implements ICommand {
-    private name: string;
-    private surname: string;
-    
-    public constructor(name: string, surname: string) {
-        this.name = name;
-        this.surname = surname;
-    }
+  private name: string;
+  private surname: string;
+  private email: string;
+  private password: string;
 
-    public getName(): string {
-        return this.name;
-    }
+  public constructor(
+    name: string,
+    surname: string,
+    email: string,
+    password: string
+  ) {
+    this.name = name;
+    this.surname = surname;
+    this.email = email;
+    this.password = password;
+  }
 
-    public getSurname(): string {
-        return this.surname;
-    }
+  public getName(): string {
+    return this.name;
+  }
+
+  public getSurname(): string {
+    return this.surname;
+  }
+
+  public getEmail(): string {
+    return this.email;
+  }
+
+  public getPassword(): string {
+    return this.password;
+  }
 }
 
 export default StoreUserCommand;

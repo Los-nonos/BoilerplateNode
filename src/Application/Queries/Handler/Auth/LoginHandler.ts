@@ -1,4 +1,4 @@
-import { inject } from "inversify";
+import {inject, injectable} from "inversify";
 import { INTERFACES } from "../../../../Infrastructure/DI/interfaces.types";
 import LoginQuery from "../../Query/Auth/LoginQuery";
 import EmailNotVerified from "../../../Exceptions/EmailNotVerified";
@@ -8,6 +8,7 @@ import {TokenAuthService} from "../../../../Domain/Interfaces/Services/TokenAuth
 import LoginResult from "../../Results/Auth/LoginResult";
 import {UserRepository} from "../../../../Domain/Interfaces/Repositories/UserRepository";
 
+@injectable()
 class LoginHandler {
     private userRepository: UserRepository;
     private hashManager: HashManager;

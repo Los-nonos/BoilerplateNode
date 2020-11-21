@@ -1,23 +1,21 @@
-import {env} from "./environment";
-
 const configValues = {
     jwt: {
-        secret: env('JWT_SECRET'),
-        expirationTime: env('JWT_EXPIRATION_TIME')
+        secret: process.env.JWT_SECRET,
+        expirationTime: process.env.JWT_EXPIRATION_TIME
     },
     database: {
         credentials: {
-            username: env("DATABASE_USER", "root"),
-            password: env("DATABASE_PASSWORD", "secret"),
+            username: process.env.DATABASE_USER,
+            password: process.env.DATABASE_PASSWORD /*? process.env.DATABASE_PASSWORD : 'secret'*/,
         },
-        host: env("DATABASE_HOST","mysql"),
+        host: process.env.DATABASE_HOST ?? '127.0.0.1',
         migration_table: 'migrations',
-        port: env('DATABASE_PORT'),
-        database: env('DATABASE_NAME'),
+        port: process.env.DATABASE_PORT ?? '3306',
+        database: process.env.DATABASE_NAME ?? 'database',
     },
     redis: {
-        port: env('REDIS_PORT', '6938'),
-        host: env('REDIS_HOST', "localhost"),
+        port: process.env.REDIS_PORT ?? '6938',
+        host: process.env.REDIS_HOST ?? "127.0.0.1",
     },
 }
 
@@ -33,6 +31,8 @@ export const config = (route: string, defaultValue: string = null): string => {
     {
         const values = route.split('.');
         values.forEach((value, key) => {
+            console.log(value);
+            console.log(finalValue);
             finalValue = key == 0 ? configValues[value] : finalValue[value];
         });
     }else {
@@ -41,6 +41,8 @@ export const config = (route: string, defaultValue: string = null): string => {
 
     if(typeof finalValue !== "string")
     {
+        console.log(typeof finalValue);
+        console.log(route);
         throw new Error('Config value isn\'t string');
     }
     else{

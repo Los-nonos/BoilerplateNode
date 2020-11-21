@@ -1,8 +1,8 @@
-import {TokenAuthService} from "../../../Domain/Interfaces/Services/ITokenAuthService";
+import {TokenAuthService} from "../../../Domain/Interfaces/Services/TokenAuthService";
 import {IToken} from "../../../Domain/ValueObjects/IToken";
 import {INTERFACES} from "../../DI/interfaces.types";
 import {inject, injectable} from "inversify";
-import {TokenAuthRepository} from "../../../Domain/Interfaces/Repositories/ITokenAuthRepository";
+import {TokenAuthRepository} from "../../../Domain/Interfaces/Repositories/TokenAuthRepository";
 import UnauthorizedException from "../../../Presentation/Http/Exceptions/UnauthorizedException";
 import User from "../../../Domain/Entities/User";
 import Token from "../Token";

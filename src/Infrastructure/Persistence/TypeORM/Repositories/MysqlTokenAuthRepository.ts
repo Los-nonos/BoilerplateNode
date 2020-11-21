@@ -9,7 +9,7 @@ class MysqlTokenAuthRepository extends TypeRepository implements TokenAuthReposi
     }
 
     public async persist(token: IToken): Promise<void> {
-        await this.repository(Token).persist(token);
+        await this.repository(Token).save(token);
     }
 
     public async remove(token: IToken): Promise<void> {

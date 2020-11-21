@@ -1,3 +1,3 @@
-export default interface IResult {
+export interface IResult {
     getData(): any;
 }

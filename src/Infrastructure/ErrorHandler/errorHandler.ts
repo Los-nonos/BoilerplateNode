@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import { INTERFACES } from '../DI/interfaces.types';
-import { LoggerService } from '../../Domain/Interfaces/Services/ILoggerService';
+import { LoggerService } from '../../Domain/Interfaces/Services/LoggerService';
 import { LogLevels } from '../../Domain/Enums/LogLevels';
 import DIContainer from '../DI/di.config';
 import { HTTP_CODES } from '../../Presentation/Http/Enums/HttpCodes';
 import { codeErrors } from '../../Presentation/Http/Validations/Utils/ErrorMessages';
-import EntityNotFoundException from '../../Application/Exceptions/EntityNotFoundException';
+import EntityNotFoundException from '../../Application/Exceptions/EntityNotFound';
 import NotFoundException from '../../Presentation/Http/Exceptions/NotFountException';
 import InternalErrorException from '../../Presentation/Http/Exceptions/InternalErrorException';
 import UnprocessableEntityException from '../../Presentation/Http/Exceptions/UnprocessableEntityException';
