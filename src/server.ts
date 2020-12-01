@@ -2,7 +2,6 @@
 import 'reflect-metadata';
 import App from './App';
 import express, { Application } from 'express';
-import { env } from './config/environment';
 
 class Server {
   private express: Application;
@@ -10,7 +9,7 @@ class Server {
   constructor() {
     this.express = express();
     this.app = new App(this.express);
-    const PORT = env('PORT', '3002');
+    const PORT = process.env.PORT ?? '3002';
     this.up(Number(PORT));
     this.app.upServer();
   }

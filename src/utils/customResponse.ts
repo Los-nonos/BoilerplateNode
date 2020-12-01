@@ -40,7 +40,7 @@
  *   }
  * }
  */
-import { IPaginatedSuccessResponse } from './IPaginatedSuccessResponse';
+import { IPaginatedSuccessResponse } from "./IPaginatedSuccessResponse";
 
 export function success(data: any, details: string) {
   return {
@@ -87,7 +87,7 @@ export function paginatedSuccess(
   items: any,
   itemCount: number,
   total: number,
-  pageCount: number,
+  pageCount: number
 ): IPaginatedSuccessResponse {
   return {
     items,

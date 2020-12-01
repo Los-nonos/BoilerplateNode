@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import { INTERFACES } from '../DI/interfaces.types';
-import { ILoggerService } from '../../Domain/Interfaces/Services/ILoggerService';
+import { LoggerService } from '../../Domain/Interfaces/Services/LoggerService';
 import { LogLevels } from '../../Domain/Enums/LogLevels';
 import DIContainer from '../DI/di.config';
 import { HTTP_CODES } from '../../Presentation/Http/Enums/HttpCodes';
 import { codeErrors } from '../../Presentation/Http/Validations/Utils/ErrorMessages';
-import EntityNotFoundException from '../../Application/Exceptions/EntityNotFoundException';
+import EntityNotFoundException from '../../Application/Exceptions/EntityNotFound';
 import NotFoundException from '../../Presentation/Http/Exceptions/NotFountException';
 import InternalErrorException from '../../Presentation/Http/Exceptions/InternalErrorException';
 import UnprocessableEntityException from '../../Presentation/Http/Exceptions/UnprocessableEntityException';
@@ -14,7 +14,7 @@ import { error } from '../../utils/customResponse';
 
 
 export const logErrors = (e: any, _request: Request, _response: Response, next: NextFunction) => {
-    const logger = DIContainer.get<ILoggerService>(INTERFACES.ILoggerService);
+    const logger = DIContainer.get<LoggerService>(INTERFACES.ILoggerService);
     logger.log(LogLevels.ERROR, e.stack);
     return next(e);
 }

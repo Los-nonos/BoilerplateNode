@@ -1,16 +1,13 @@
 import { createConnection } from 'typeorm';
 import { isTesting, isDevelopment, isProduction, getMode } from '../../config/mode';
-import {config} from '../../config/config';
-import { env } from '../../config/environment';
 
 export default class DatabaseConnection {
   public async getConnection(): Promise<void> {
-    const db_username = config('database.credentials.username');
-    const db_password = config('database.credentials.password');
-    const db_database = config('database.database');
-    const db_port = config('database.port');
-    const db_host = config('database.host');
-    const db_migrations_table = config('database.migrationstable');
+    const db_username = process.env.DATABASE_USER;
+    const db_password = process.env.DATABASE_PASSWORD;
+    const db_database = process.env.DATABASE_NAME;
+    const db_port = process.env.DATABASE_PORT;
+    const db_host = process.env.DATABASE_HOST;
 
     console.log(`Mode: ${getMode()}`);
     console.log(`Host: ${db_host}`);
@@ -26,9 +23,9 @@ export default class DatabaseConnection {
         synchronize: false,
         logging: false,
         migrations: ['./dist/Persistence/TypeORM/Migrations/*.js'],
-        migrationsTableName: db_migrations_table,
+        migrationsTableName: 'migrations',
         migrationsRun: true,
-        entities: ['./dist/Domain/Entities/*.js'],
+        entities: ['./dist/Domain/Entities/*.js', './dist/Infrastructure/Auth/Token.js'],
         cli: {
           migrationsDir: './TypeORM/Migrations',
         },
@@ -44,9 +41,9 @@ export default class DatabaseConnection {
         synchronize: false,
         logging: true,
         migrations: ['./dist/Infrastructure/Persistence/TypeORM/Migrations/*.js'],
-        migrationsTableName: db_migrations_table,
+        migrationsTableName: 'migrations',
         migrationsRun: true,
-        entities: ['./dist/Domain/Entities/*.js'],
+        entities: ['./dist/Domain/Entities/*.js', './dist/Infrastructure/Auth/Token.js'],
         cli: {
           migrationsDir: './TypeORM/Migrations',
         },

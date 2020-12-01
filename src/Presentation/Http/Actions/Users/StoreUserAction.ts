@@ -3,20 +3,23 @@ import { HTTP_CODES } from '../../Enums/HttpCodes';
 import { success } from '../../../../utils/customResponse';
 import StoreUserAdapter from '../../Adapters/Users/StoreUserAdapter';
 import StoreUserHandler from '../../../../Application/Commands/Handler/Users/StoreUserHandler';
+import {inject, injectable} from "inversify";
 
+@injectable()
 class StoreUserAction {
     private adapter: StoreUserAdapter;
     private handler: StoreUserHandler
-    constructor() {
-        //inject dependencies and assigned to properties
+    constructor(@inject(StoreUserAdapter) adapter: StoreUserAdapter, @inject(StoreUserHandler) handler: StoreUserHandler) {
+        this.adapter = adapter;
+        this.handler = handler;
     }
 
-    public execute(req: Request, res: Response) {
+    public async execute(req: Request, res: Response) {
         const command = this.adapter.from(req.body);
 
-        this.handler.execute(command);
+        await this.handler.execute(command);
 
-        return res.status(HTTP_CODES.CREATED).json(success([], 'StoreUserAction: User has been created successfully'));
+        return res.status(HTTP_CODES.CREATED).json(success(null, 'StoreUserAction: User has been created successfully'));
     }
 }
 
