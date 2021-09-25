@@ -1,28 +1,12 @@
-import {inject, injectable} from 'inversify';
-import * as express from 'express';
-import Auth from "./auth";
+import { Router } from 'express';
+import glob from 'glob';
 
+export function registerRoutes(router: Router) {
+  const routes = glob.sync(__dirname + '/**/*.route.*');
+  routes.map(route => register(route, router));
+}
 
-@injectable()
-export default class ApiRoutes {
-    private router: express.Router;
-    private authRoutes: Auth;
-    
-    public constructor(@inject(Auth) authRoutes: Auth) {
-        this.router = express.Router();
-        this.authRoutes = authRoutes;
-        this.setRoutes();
-    }
-
-    private setRoutes(): void {
-        this.router.get('/', () => {
-            return 'Hello!';
-        });
-
-        this.router.use('/auth', this.authRoutes.getRoutes());
-    }
-
-    public getRoutes(): express.Router {
-        return this.router;
-    }
+function register(routePath: string, router: Router) {
+  const route = require(routePath);
+  route.register(router);
 }

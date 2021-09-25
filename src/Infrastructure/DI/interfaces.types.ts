@@ -6,5 +6,6 @@ export const INTERFACES = {
   IUserService: Symbol.for('IUserService'),
   ITokenAuthRepository: Symbol.for('ITokenAuthRepository'),
   IHashManager: Symbol.for('IHashManager'),
-  IUserRepository: Symbol.for('IUserRepository')
+  IUserRepository: Symbol.for('IUserRepository'),
+  EventBus: Symbol.for('EventBus')
 }

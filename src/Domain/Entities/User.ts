@@ -1,9 +1,10 @@
 import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 import EmailNotVerified from "../../Application/Exceptions/EmailNotVerified";
 import EmailAlreadyVerified from "../../Application/Exceptions/EmailAlreadyVerified";
+import { AggregateRoot } from "../ValueObjects/AggregateRoot";
 
 @Entity('users')
-class User {
+class User extends AggregateRoot {    
     @PrimaryGeneratedColumn()
     private id: number;
 
@@ -25,6 +26,7 @@ class User {
     private role: string;
 
     constructor(name: string, surname: string, email: string, hashedPassword: string) {
+        super();
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -83,6 +85,14 @@ class User {
         }
         this.emailHashVerified = true;
     }
+
+    public toPrimitives() {
+        return {
+            id: this.id,
+            name: this.name,
+        };
+    }
+
 }
 
 export default User;

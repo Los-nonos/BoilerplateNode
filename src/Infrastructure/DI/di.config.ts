@@ -1,30 +1,25 @@
 import { Container } from 'inversify';
 import { INTERFACES } from './interfaces.types';
-import ApiRoutes from '../../Presentation/Http/Routes';
 import {LoggerService} from "../../Domain/Interfaces/Services/LoggerService";
 import WinstonLoggerService from "../Logger/Providers/WinstonLoggerService";
-import Auth from "../../Presentation/Http/Routes/auth";
 import LoginAction from "../../Presentation/Http/Actions/Auth/LoginAction";
 import LoginAdapter from "../../Presentation/Http/Adapters/Auth/LoginAdapter";
 import LoginHandler from "../../Application/Queries/Handler/Auth/LoginHandler";
 import {ValidationService} from "../../Presentation/Http/Validations/Utils/ValidationService";
 import JoiValidationService from "../../Presentation/Http/Validations/Utils/JoiValidationService";
-import MysqlUserRepository from "../Persistence/TypeORM/Repositories/MysqlUserRepository";
+import MysqlUserRepository from "../Persistence/mysql/Repositories/MysqlUserRepository";
 import {UserRepository} from "../../Domain/Interfaces/Repositories/UserRepository";
 import {HashManager} from "../../Domain/Interfaces/Services/HashManager";
 import BCryptHashProvider from "../Hash/Providers/BCryptHashProvider";
 import {TokenAuthService} from "../../Domain/Interfaces/Services/TokenAuthService";
 import AuthProviderService from "../Auth/Provider/AuthProviderService";
 import {TokenAuthRepository} from "../../Domain/Interfaces/Repositories/TokenAuthRepository";
-import MysqlTokenAuthRepository from "../Persistence/TypeORM/Repositories/MysqlTokenAuthRepository";
+import MysqlTokenAuthRepository from "../Persistence/mysql/Repositories/MysqlTokenAuthRepository";
 import StoreUserAction from "../../Presentation/Http/Actions/Users/StoreUserAction";
 import StoreUserAdapter from "../../Presentation/Http/Adapters/Users/StoreUserAdapter";
 import StoreUserHandler from "../../Application/Commands/Handler/Users/StoreUserHandler";
 
 const DIContainer = new Container();
-
-DIContainer.bind<ApiRoutes>(ApiRoutes).toSelf();
-DIContainer.bind<Auth>(Auth).toSelf();
 
 /**
  * Actions

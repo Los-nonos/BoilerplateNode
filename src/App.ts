@@ -1,49 +1,42 @@
-import { Application } from 'express';
-import * as errorHandler from './Infrastructure/ErrorHandler/errorHandler';
 import DatabaseConnection from './Infrastructure/Persistence/DatabaseConnection';
-import IndexApiRoutes from './Presentation/Http/Routes/index';
-import DIContainer from './Infrastructure/DI/di.config';
 import dotenv from 'dotenv';
-import HttpKernel from "./Presentation/Http/Kernel";
+import Server from './server';
+import DIContainer from './Infrastructure/DI/di.config';
+import { INTERFACES } from './Infrastructure/DI/interfaces.types';
+import { SUBSCRIBERS } from './Infrastructure/DI/subscribers.ioc';
+import { DomainEventMapping } from './Infrastructure/EventBus/DomainEventMapping';
+import { EventBus } from './Domain/Interfaces/EventBus';
 
 class App {
-  private app: Application;
-  private apiRoutes: IndexApiRoutes;
+  private server?: Server;
 
-  public constructor(express: Application) {
-    this.app = express;
-  }
-
-  public async upServer() {
-    /**
-     * Load environment variables from .env file, where API keys and passwords are configured.
-     */
+  async start() {
     const result = dotenv.config();
 
     if (result.error) {
-      throw new Error(`Environment variables not configured, aborting`);
+      throw result.error;
     }
 
-    this.apiRoutes = DIContainer.resolve<IndexApiRoutes>(IndexApiRoutes);
-
+    const port = process.env.PORT || '3000';
+    this.server = new Server(port);
     await this.setDatabaseConnection();
-    this.setMiddlewares();
-    this.setRoutes();
-    this.catchErrors();
+    await this.registerSubscribers();
+    return this.server.listen();
   }
 
-  private setMiddlewares(): void {
-    this.app = new HttpKernel().handle(this.app);
+  async stop() {
+    await this.server?.stop();
   }
 
-  private setRoutes(): void {
-    this.app.use('/v1', this.apiRoutes.getRoutes());
+  get port(): string {
+    if (!this.server) {
+      throw new Error('Backoffice backend application has not been started');
+    }
+    return this.server.port;
   }
 
-  private catchErrors(): void {
-    this.app.use(errorHandler.logErrors);
-    this.app.use(errorHandler.mapApplicationToHTTPErrors);
-    this.app.use(errorHandler.execute);
+  get httpServer() {
+    return this.server?.httpServer;
   }
 
   private async setDatabaseConnection(): Promise<void> {
@@ -51,8 +44,18 @@ class App {
     await dbConnection.getConnection();
   }
 
-  public getAppInstance(): Application {
-    return this.app;
+  private async registerSubscribers() {
+    const eventBus = DIContainer.get(INTERFACES.EventBus) as EventBus;
+
+    const domainEventMapping = new DomainEventMapping(SUBSCRIBERS);
+
+    eventBus.setDomainEventMapping(domainEventMapping);
+    eventBus.addSubscribers(SUBSCRIBERS);
+    await eventBus.start();
+  }
+
+  public getAppInstance(): Server {
+    return this.server;
   }
 }
 

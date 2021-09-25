@@ -7,9 +7,11 @@ import PasswordNotMatch from "../../../Exceptions/PasswordNotMatch";
 import {TokenAuthService} from "../../../../Domain/Interfaces/Services/TokenAuthService";
 import LoginResult from "../../Results/Auth/LoginResult";
 import {UserRepository} from "../../../../Domain/Interfaces/Repositories/UserRepository";
+import { QueryHandler } from "../../../../Domain/ValueObjects/QueryHandler";
+import { Query } from "../../../../Domain/ValueObjects/Query";
 
 @injectable()
-class LoginHandler {
+class LoginHandler implements QueryHandler<LoginQuery, LoginResult> {
     private userRepository: UserRepository;
     private hashManager: HashManager;
     private tokenAuthService: TokenAuthService;
@@ -23,8 +25,11 @@ class LoginHandler {
         this.hashManager = hashManager;
         this.tokenAuthService = tokenAuthService;
     }
+    subscribedTo(): Query {
+        return LoginQuery;
+    }
 
-    public async execute(command: LoginQuery) {
+    public async handle(command: LoginQuery) {
         const user = await this.userRepository.findOneByEmailOrFail(command.getEmail());
 
         if (!(await this.hashManager.check(command.getPassword(), user.getPassword()))) {

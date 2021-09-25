@@ -1,15 +1,15 @@
-import {IToken} from "../../../../Domain/ValueObjects/IToken";
 import User from "../../../../Domain/Entities/User";
+import { Response } from '../../../../Domain/ValueObjects/Response';
 
-class LoginResult {
-  private token: IToken;
+class LoginResult implements Response {
+  private token: any;
   private user: User;
-  public constructor(token: IToken, user: User) {
+  public constructor(token: any, user: User) {
     this.token = token;
     this.user = user;
   }
 
-  public getToken(): IToken {
+  public getToken(): any {
     return this.token;
   }
 

@@ -1,6 +1,6 @@
-import ICommand from '../../../../Infrastructure/CommandBus/Command/ICommand';
+import { Command } from '../../../../Domain/ValueObjects/Command';
 
-class StoreUserCommand implements ICommand {
+class StoreUserCommand implements Command {
   private name: string;
   private surname: string;
   private email: string;
