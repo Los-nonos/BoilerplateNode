@@ -1,4 +1,4 @@
-import {Request, Response} from 'express';
+import {NextFunction, Request, Response} from 'express';
 import {HTTP_CODES} from "../../Enums/HttpCodes";
 import {inject, injectable} from "inversify";
 import LoginAdapter from "../../Adapters/Auth/LoginAdapter";
@@ -17,17 +17,23 @@ class LoginAction {
     this.handler = handler;
   }
 
-  public async execute(req: Request, res: Response) {
+  public async execute(req: Request, res: Response, next: NextFunction) {
     const command = this.adapter.from(req.body);
 
-    const result = await this.handler.execute(command);
+    const result = await this.handler.handle(command);
 
-    return res.cookie(`${process.env.APP_NAME}_cookie`, result.getToken().getHash())
-      .status(HTTP_CODES.OK)
-      .json({
-      user: result.getUser().getId(),
-      token: result.getToken().getHash()
-    });
+    req.login(result.getUser(), (err) => {
+      if (err) {
+        return next(err);
+      }
+      
+      res.cookie(`${process.env.APP_NAME}_cookie`, result.getToken().getHash())
+        .status(HTTP_CODES.OK)
+        .json({
+          user: result.getUser().getId(),
+          token: result.getToken().getHash()
+        });
+    });    
   }
 }
 

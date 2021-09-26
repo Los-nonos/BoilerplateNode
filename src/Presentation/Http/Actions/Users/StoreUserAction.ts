@@ -17,7 +17,7 @@ class StoreUserAction {
     public async execute(req: Request, res: Response) {
         const command = this.adapter.from(req.body);
 
-        await this.handler.execute(command);
+        await this.handler.handle(command);
 
         return res.status(HTTP_CODES.CREATED).json(success(null, 'StoreUserAction: User has been created successfully'));
     }

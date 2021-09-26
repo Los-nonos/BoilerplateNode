@@ -5,6 +5,16 @@ import EntityNotFound from "../../../../Application/Exceptions/EntityNotFound";
 import EmailAlreadyRegistered from "../../../../Application/Exceptions/EmailAlreadyRegistered";
 
 class MysqlUserRepository extends TypeRepository implements UserRepository {
+    public async findOneById(id: number): Promise<User> {
+        const user = await this.repository(User).findOne({where: {id}});
+
+        if (!user) {
+            throw new EntityNotFound(`User with id: ${id} not found`);
+        }
+
+        return user;
+    }
+
     public async persist(user: User): Promise<User> {
         return await this.repository(User).save(user);
     }
